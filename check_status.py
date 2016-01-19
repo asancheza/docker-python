@@ -9,6 +9,7 @@ import urllib
 import unittest
 import getopt
 import threading
+import time
 from multiprocessing import Process
 
 """ 
@@ -19,6 +20,7 @@ class Status:
 	Connect to url
 	"""
 	def connect(self, url):
+		print url
 		connection = urllib.urlopen(url)
 		print "[" + str(connection.getcode()) + "] " + url
 
@@ -28,29 +30,24 @@ class Status:
 	def checkConnection(self):
 		with open("urls.txt", "r") as urls:
 			for url in urls:
-				connect(self, url)
+				self.connect(url)
 
 	"""
 	Check connection with threads
 	"""
 	def checkConnectionThreads(self):
-		threads = []
-
 		with open("urls.txt", "r") as urls:
 			for url in urls:
-				t = threading.Thread(target=connect, args=('url'))
-				threads.append(t)
+				t = threading.Thread(target=self.connect, args=(url,))
 				t.start()
 
 	"""
 	Check connection multiproccessing
 	"""
 	def checkConnectionMultiprocessing(self):
-		threads = []
-		
 		with open("urls.txt", "r") as urls:
 			for url in urls:
-				p = Process(target=connect, args=('url'))
+				p = Process(target=self.connect, args=(url,))
     		p.start()
     		p.join()
 
@@ -58,11 +55,17 @@ class Status:
 Main to call all the options
 """
 def main():
-	print sys.argv[0]
-	status = Status()
-	status.checkConnection()
-	status.checkConnectionThreads()
-	status.checkConnectionMultiprocessing()
+	if len(sys.argv) > 2:
+		if (sys.argv[2] == "multithreads"):
+			status = Status()
+			status.checkConnectionThreads()
+
+		if (sys.argv[2] == "multiproccessing"):
+			status = Status()
+			status.checkConnectionMultiprocessing()
+	else:
+		status = Status()
+		status.checkConnection()
 
 if __name__ == "__main__":
 	main()
