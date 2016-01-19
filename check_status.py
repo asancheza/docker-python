@@ -10,6 +10,7 @@ import unittest
 import getopt
 import threading
 import time
+from mock import patch
 from multiprocessing import Process
 
 """ 
@@ -48,8 +49,8 @@ class Status:
 		with open("urls.txt", "r") as urls:
 			for url in urls:
 				p = Process(target=self.connect, args=(url,))
-    		p.start()
-    		p.join()
+				p.start()
+				p.join()
 
 """
 Main to call all the options
@@ -60,7 +61,7 @@ def main():
 			status = Status()
 			status.checkConnectionThreads()
 
-		if (sys.argv[2] == "multiproccessing"):
+		if (sys.argv[2] == "multiprocessing"):
 			status = Status()
 			status.checkConnectionMultiprocessing()
 	else:
