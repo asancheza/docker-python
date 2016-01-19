@@ -10,7 +10,7 @@ import unittest
 import getopt
 import threading
 import time
-from mock import patch
+#from mock import patch
 from multiprocessing import Process
 
 """ 
@@ -21,9 +21,8 @@ class Status:
 	Connect to url
 	"""
 	def connect(self, url):
-		print url
 		connection = urllib.urlopen(url)
-		print "[" + str(connection.getcode()) + "] " + url
+		sys.stdout.write("[" + str(connection.getcode()) + "] " + url)
 
 	""" 
 	Check connection
