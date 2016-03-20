@@ -1,5 +1,4 @@
-# interview-python
-
+# Python app in Docker
 
 ## Step 1
 
@@ -54,4 +53,3 @@ Make it parallel by using processes.
 Example invocation:
 
 	docker run -it app -k multiprocessing
-
